@@ -1,0 +1,3 @@
+User-agent: *  
+Disallow: /telek.swf
+Sitemap: https://artscreen.su/sitemap.xml
