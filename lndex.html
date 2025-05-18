@@ -61,8 +61,8 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 <!-- Подключение Ruffle -->
 <script src="/ruffle.js"></script>
 
-<!-- Контейнер для плеера -->
-<div id="flash-container" style="float: left; margin-right: 15px; width: 370px; height: 250px;"></div>
+<!-- Контейнер для плеера с фиксированным размером -->
+<div id="flash-container" style="float: left; margin-right: 15px; width: 370px; height: 250px; overflow: hidden;"></div>
 
 <!-- Скрипт инициализации Ruffle -->
 <script>
@@ -71,6 +71,8 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
     const container = document.getElementById("flash-container");
     const player = ruffle.createPlayer();
     container.appendChild(player);
+    player.style.width = "370px";
+    player.style.height = "250px";
     player.load("/telek.swf");
   });
 </script>
