@@ -58,74 +58,24 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 <p align="center" class="text-yellow">Мы предлагаем качественное и стильное решение по совмещению дизайнерского интерьера с современной 
 аудио-видео техникой.</p>
    
-<!--
-  <script>
-        window.RufflePlayer = {
-            config: {
-                publicPath: "/",  // Указывает корень сайта для поиска файлов
-                polyfills: {
-                    hardwareAcceleration: {
-                        enabled: true,
-                        hideWarning: true  // Скрываем сообщение об ускорении
-                    }
-                },
-                autoplay: "on",
-                unmuteOverlay: "hidden"
-            }
-        };
-    </script>
-    
-     Подключаем ruffle.js 
-    <script src="/ruffle.js"></script>
-<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-         
-         <style>
-        ruffle-player {
-            width: 370px;
-            height: 250px;
-            float: left;
-            margin-right: 15px;
-            display: block !important; /* Важно! */
-        }
-    </style>
+<!-- Подключение Ruffle -->
+<script src="/ruffle.js"></script>
 
+<!-- Контейнер для плеера -->
+<div id="flash-container" style="float: left; margin-right: 15px; width: 370px; height: 250px;"></div>
 
-    <!-- Альтернативный вариант с проверкой ошибок -->
-    <div id="flash-container">
-        <ruffle-player
-            src="/telek.swf"
-            width="370"
-            height="250">
-        </ruffle-player>
-    </div>
-
-    <!-- Скрипт проверки загрузки -->
- <!--    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                const player = document.querySelector("ruffle-player");
-                if (!player || !player.shadowRoot) {
-                    console.error("Ruffle не инициализировался!");
-                    // Показываем fallback-контент
-                    document.getElementById("flash-container").innerHTML = `
-                        <object type="application/x-shockwave-flash" data="/telek.swf" 
-                            width="370" height="250">
-                            <param name="movie" value="/telek.swf" />
-                            <param name="wmode" value="opaque" />
-                        </object>
-                    `;
-                }
-            }, 2000);
-        });
-    </script>
-</style>                  -->
-       
-       
-       
+<!-- Скрипт инициализации Ruffle -->
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const ruffle = window.RufflePlayer?.newest() || window.RufflePlayer?.createPlayer();
+    const container = document.getElementById("flash-container");
+    const player = ruffle.createPlayer();
+    container.appendChild(player);
+    player.load("/telek.swf");
+  });
+</script>
  
- <!--  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>  --> 
- 
-  <script src="/ruffle.js"></script> 
+<!--  <script src="/ruffle.js"></script> 
 <object type="application/x-shockwave-flash" data="telek.swf"  play="true" loop="true" autoplay="true" width="370" height="250" 
   style="float: left; margin-right: 15px;">
   <param name="movie" value="telek.swf" />
@@ -135,7 +85,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
   <param name="allowFullScreen" value="true" />
   <param name="autoplay" value="true" />
   <param name="play" value="true" />
-  <param name="loop" value="true" /></object>  
+  <param name="loop" value="true" /></object>  -->
 
          
 <p>Великолепное решение плазменную панель или ЖК телевизор на стене любого размера и пропорций замаскировать картиной - органично вписав его в 
