@@ -57,65 +57,69 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 <p align="center" class="text-yellow">Мы предлагаем качественное и стильное решение по совмещению дизайнерского интерьера с современной 
 аудио-видео техникой.</p>
    
- <!-- Обязательные настройки перед загрузкой Ruffle -->
+  <!-- 1. Настройки Ruffle ДО загрузки скрипта -->
     <script>
         window.RufflePlayer = {
             config: {
-                publicPath: "/",  // Указывает корень сайта для поиска файлов
+                autoplay: "on",
+                unmuteOverlay: "hidden",
+                showSwfDownload: false,
+                warnOnUnsupportedContent: false,
+                contextMenu: false,
                 polyfills: {
+                    webgl: {
+                        enabled: true,
+                        hideWarning: true  // Ключевой параметр!
+                    },
                     hardwareAcceleration: {
                         enabled: true,
-                        hideWarning: true  // Скрываем сообщение об ускорении
+                        hideWarning: true  // Дублируем для надежности
                     }
-                },
-                autoplay: "on",
-                unmuteOverlay: "hidden"
-            }
+                }
+            },
+            publicPath: "/",  // Важно для локальных файлов
+            playerVersion: "latest"
         };
     </script>
-    
-    <!-- Подключаем ruffle.js -->
+
+    <!-- 2. Подключаем Ruffle -->
     <script src="/ruffle.js"></script>
+    
+    <!-- 3. Стили для скрытия возможных артефактов -->
     <style>
         ruffle-player {
             width: 370px;
             height: 250px;
-            float: left;
-            margin-right: 15px;
-            display: block !important; /* Важно! */
+            overflow: hidden !important;
+        }
+        ruffle-player::part(warning-container) {
+            display: none !important;
         }
     </style>
 
 
-    <!-- Альтернативный вариант с проверкой ошибок -->
+    <!-- 4. Плеер с резервным вариантом -->
     <div id="flash-container">
         <ruffle-player
             src="/telek.swf"
             width="370"
-            height="250">
+            height="250"
+            autoplay
+            loop>
         </ruffle-player>
     </div>
 
-    <!-- Скрипт проверки загрузки -->
+    <!-- 5. Проверка инициализации -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                const player = document.querySelector("ruffle-player");
-                if (!player || !player.shadowRoot) {
-                    console.error("Ruffle не инициализировался!");
-                    // Показываем fallback-контент
-                    document.getElementById("flash-container").innerHTML = `
-                        <object type="application/x-shockwave-flash" data="/telek.swf" 
-                            width="370" height="250">
-                            <param name="movie" value="/telek.swf" />
-                            <param name="wmode" value="opaque" />
-                        </object>
-                    `;
-                }
-            }, 2000);
-        });
+        setTimeout(() => {
+            const player = document.querySelector("ruffle-player");
+            if (player && player.shadowRoot) {
+                // Принудительно скрываем все предупреждения
+                const warnings = player.shadowRoot.querySelectorAll('.warning-overlay');
+                warnings.forEach(w => w.style.display = 'none');
+            }
+        }, 2000);
     </script>
-
 
 
        
