@@ -58,7 +58,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 <p align="center" class="text-yellow">Мы предлагаем качественное и стильное решение по совмещению дизайнерского интерьера с современной 
 аудио-видео техникой.</p>
    
-
+<!--
   <script>
         window.RufflePlayer = {
             config: {
@@ -75,8 +75,8 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
         };
     </script>
     
-    <!-- Подключаем ruffle.js 
-    <script src="/ruffle.js"></script>-->
+     Подключаем ruffle.js 
+    <script src="/ruffle.js"></script>
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
          
          <style>
@@ -100,7 +100,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
     </div>
 
     <!-- Скрипт проверки загрузки -->
-    <script>
+ <!--    <script>
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const player = document.querySelector("ruffle-player");
@@ -118,14 +118,14 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
             }, 2000);
         });
     </script>
-</style>
+</style>                  -->
        
        
        
  
-  <!-- <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>  
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>  
  
-   <script src="/ruffle.js"></script>  
+  <!-- <script src="/ruffle.js"></script> --> 
 <object type="application/x-shockwave-flash" data="telek.swf"  play="true" loop="true" autoplay="true" width="370" height="250" 
   style="float: left; margin-right: 15px;">
   <param name="movie" value="telek.swf" />
@@ -135,7 +135,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
   <param name="allowFullScreen" value="true" />
   <param name="autoplay" value="true" />
   <param name="play" value="true" />
-  <param name="loop" value="true" /></object>   --> 
+  <param name="loop" value="true" /></object>  
 
          
 <p>Великолепное решение плазменную панель или ЖК телевизор на стене любого размера и пропорций замаскировать картиной - органично вписав его в 
@@ -160,32 +160,5 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 </td>
 </tr>
 </table>
-<script>
-  window.scrollTo(0, document.body.scrollHeight);
-</script>
-
-<script>
-    (function hideRuffleWarnings() {
-        const observer = new MutationObserver((mutations) => {
-            document.querySelectorAll('.warning-overlay, .ruffle-warning').forEach(el => {
-                el.style.cssText = 'display:none!important;opacity:0!important;';
-                el.remove();
-            });
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true
-        });
-
-        // Дублирующая проверка каждые 2 секунды
-        setInterval(() => {
-            const warnings = document.querySelectorAll('[class*="warning"], [class*="alert"]');
-            warnings.forEach(w => w.style.display = 'none');
-        }, 2000);
-    })();
-</script>
-
 </body>
 </html>
