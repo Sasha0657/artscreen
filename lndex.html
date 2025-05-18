@@ -34,6 +34,7 @@
 
 
 </head>
+    <!-- =================================================================================================================== -->
 <body>
 <!-- Yandex.Metrika informer -->
 <a href="https://metrika.yandex.ru/stat/?id=99844042&amp;from=informer"
@@ -192,5 +193,29 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 <script>
   window.scrollTo(0, document.body.scrollHeight);
 </script>
+
+<script>
+    (function hideRuffleWarnings() {
+        const observer = new MutationObserver((mutations) => {
+            document.querySelectorAll('.warning-overlay, .ruffle-warning').forEach(el => {
+                el.style.cssText = 'display:none!important;opacity:0!important;';
+                el.remove();
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+
+        // Дублирующая проверка каждые 2 секунды
+        setInterval(() => {
+            const warnings = document.querySelectorAll('[class*="warning"], [class*="alert"]');
+            warnings.forEach(w => w.style.display = 'none');
+        }, 2000);
+    })();
+</script>
+
 </body>
 </html>
