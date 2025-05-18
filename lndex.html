@@ -59,91 +59,110 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 аудио-видео техникой.</p>
    
  
-<div id="flash-container" style="width:370px; height:250px; position:relative; float:left; margin-right:15px; background:#f0f0f0;">
+<div id="flash-container" style="width:370px; height:250px; position:relative; float:left; margin-right:15px; overflow:hidden;">
   <!-- Плеер появится здесь -->
 </div>
 
-<!-- 1. Подключаем локальный ruffle.js -->
-<script src="/ruffle.js"></script>
-
 <script>
-  // 2. Настройка Ruffle
-  window.RufflePlayer = window.RufflePlayer || {};
-  window.RufflePlayer.config = {
+// 1. Правильная настройка Ruffle (актуальная для версии 2025+)
+window.RufflePlayer = {
+  config: {
     autoplay: "on",
     unmuteOverlay: "hidden",
     showSwfDownload: false,
     warnOnUnsupportedContent: false,
-    contextMenu: false,
+    contextMenu: "off",  // Исправлено согласно новой спецификации
     polyfills: {
-      webgl: { enabled: true, hideWarning: true },
-      hardwareAcceleration: { enabled: true, hideWarning: true }
+      webgl: {
+        enabled: true,
+        hideWarning: true
+      },
+      hardwareAcceleration: {
+        enabled: true,
+        hideWarning: true
+      }
     },
     rendering: {
-      preferredRenderer: "webgl",
-      forceGPU: true
-    }
-  };
-
-  // 3. Инициализация плеера
-  function initRuffle() {
-    const container = document.getElementById('flash-container');
-    
-    // Проверяем загрузился ли Ruffle
-    if (typeof RufflePlayer === "undefined") {
-      container.innerHTML = '<p style="color:red;padding:10px;">Ошибка: Ruffle не загрузился</p>';
-      return;
-    }
-    
-    // Создаем плеер
-    container.innerHTML = `
-      <ruffle-player 
-        src="/telek.swf"
-        style="width:100%; height:100%; position:absolute;"
-        autoplay
-        loop>
-      </ruffle-player>
-    `;
-    
-    // Стили для скрытия предупреждений
-    const style = document.createElement('style');
-    style.textContent = `
-      ruffle-player, ruffle-player * {
-        overflow: hidden !important;
-      }
-      .warning-overlay, .ruffle-warning {
-        display: none !important;
-      }
-    `;
-    document.body.appendChild(style);
-    
-    // Проверка через 3 секунды
-    setTimeout(checkPlayer, 3000);
-  }
-
-  // 4. Проверка работы плеера
-  function checkPlayer() {
-    const container = document.getElementById('flash-container');
-    const player = container.querySelector('ruffle-player');
-    
-    if (!player || !player.shadowRoot) {
-      container.innerHTML = `
-        <object type="application/x-shockwave-flash" data="/telek.swf"
-          width="100%" height="100%">
-          <param name="movie" value="/telek.swf"/>
-          <param name="wmode" value="opaque"/>
-          <p style="color:red;">Flash-плеер не поддерживается</p>
-        </object>
-      `;
+      preferredRenderer: "wgpu-webgl",  // Явно указываем рендерер
+      forceGPU: true,
+      warnOnFallback: false
     }
   }
+};
 
-  // Запускаем после загрузки Ruffle
-  if (document.readyState === 'complete') {
-    initRuffle();
-  } else {
-    window.addEventListener('load', initRuffle);
-  }
+// 2. Подключение Ruffle с обработкой ошибок
+function loadRuffle() {
+  const script = document.createElement('script');
+  script.src = '/ruffle.js';
+  script.onload = initPlayer;
+  script.onerror = fallbackToIframe;
+  document.body.appendChild(script);
+}
+
+// 3. Инициализация плеера
+function initPlayer() {
+  const container = document.getElementById('flash-container');
+  
+  // Создаем кастомные стили для скрытия всех предупреждений
+  const style = document.createElement('style');
+  style.textContent = `
+    ruffle-player, ruffle-player * {
+      overflow: hidden !important;
+    }
+    .warning-overlay, .ruffle-warning, .alert-message {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      pointer-events: none !important;
+    }
+    canvas[class*="renderer"] {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Вставляем плеер
+  container.innerHTML = `
+    <ruffle-player
+      src="/telek.swf"
+      style="width:100%; height:100%;"
+      autoplay
+      loop>
+    </ruffle-player>
+  `;
+  
+  // Дополнительная защита через 3 секунды
+  setTimeout(() => {
+    const warnings = container.querySelectorAll('[class*="warning"], [class*="alert"]');
+    warnings.forEach(w => w.remove());
+  }, 3000);
+}
+
+// 4. Фолбэк на iframe
+function fallbackToIframe() {
+  const container = document.getElementById('flash-container');
+  container.innerHTML = `
+    <iframe
+      src="https://ruffle.rs/demo/?url=${encodeURIComponent(window.location.origin + '/telek.swf')}#${encodeURIComponent(JSON.stringify({
+        autoplay: "on",
+        unmuteOverlay: "hidden",
+        warnOnUnsupportedContent: false
+      }))}"
+      style="width:100%; height:100%; border:none;"
+      sandbox="allow-scripts allow-same-origin">
+    </iframe>
+  `;
+}
+
+// Запускаем загрузку
+if (typeof RufflePlayer === "undefined") {
+  loadRuffle();
+} else {
+  initPlayer();
+}
 </script>
        
        
