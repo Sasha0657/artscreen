@@ -4,6 +4,35 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="maket.css" type="text/css" />
+
+<script>
+    window.RufflePlayer = {
+        config: {
+            autoplay: "on",
+            unmuteOverlay: "hidden",
+            showSwfDownload: false,
+            warnOnUnsupportedContent: false,
+            contextMenu: false,
+            polyfills: {
+                webgl: {
+                    enabled: true,
+                    hideWarning: true
+                },
+                hardwareAcceleration: {
+                    enabled: true,
+                    hideWarning: true
+                }
+            },
+            rendering: {
+                preferredRenderer: "webgl", // Форсируем WebGL
+                forceGPU: true             // Принудительно используем GPU
+            }
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@latest/dist/ruffle.js"></script>
+
+
 </head>
 <body>
 <!-- Yandex.Metrika informer -->
