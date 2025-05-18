@@ -16,3 +16,6 @@
    Order Deny,Allow
    Deny from all
  </FilesMatch>
+<IfModule mod_headers.c>
+    Header unset Speculation-Rules
+</IfModule>
