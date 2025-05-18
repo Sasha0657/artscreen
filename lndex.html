@@ -70,7 +70,10 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 
 
 
+<!-- Контейнер для плеера с фиксированным размером -->
 <div id="flash-container" style="float: left; margin-right: 15px; width: 370px; height: 250px; overflow: hidden;"></div>
+
+<!-- Скрипт инициализации Ruffle -->
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     const ruffle = window.RufflePlayer?.newest() || window.RufflePlayer?.createPlayer();
@@ -81,7 +84,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
     player.style.height = "250px";
     player.load("/telek.swf");
   });
-</script>  
+</script>
  
 <!--  <script src="/ruffle.js"></script> 
 <object type="application/x-shockwave-flash" data="telek.swf"  play="true" loop="true" autoplay="true" width="370" height="250" 
