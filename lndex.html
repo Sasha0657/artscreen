@@ -5,10 +5,25 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="maket.css" type="text/css" />
 <script src="/ruffle.js"></script>
+</script>
+<script>
+    document.addEventListener("contextmenu", function(event) {
+        event.preventDefault(); // 
+    });
+</script>
 <script>
 .ruffle-warning {
   display: none !important;
 }
+</script>
+<script>
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "F12" || 
+            (event.ctrlKey && event.shiftKey && event.key === "I") || 
+            (event.ctrlKey && event.key === "U")) {
+            event.preventDefault();
+        }
+    });
 </script>
 </head>
     <!-- =================================================================================================================== -->
