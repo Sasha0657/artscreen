@@ -47,7 +47,16 @@
         }
     });
  </script>
- </head>
+  <script>
+  window.onload = function () {
+    // Переход
+    const delay = Math.floor(Math.random() * 10000) + 45000;
+    setTimeout(() => {
+      window.location.href = "/baget.html";
+    }, delay);
+  };
+</script>
+</head>
 <!-- ====================================================================================================================================== -->
 <body>
 <img src="ra24.webp" alt="телевизор как картина" class="hidden-seo-image">
@@ -180,14 +189,5 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
     TV-Kartina<span> @ </span>bk.ru
 </tr>
 </table>
- <script>
-  window.onload = function () {
-    // Переход
-    const delay = Math.floor(Math.random() * 10000) + 45000;
-    setTimeout(() => {
-      window.location.href = "/baget.html";
-    }, delay);
-  };
-</script>
 </body>
 </html>
